@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    function A(){}
+    A.prototype = {
+        he: function(){},
+        constructor: A
+    }
+    var ss = new A();
+    console.log(A.prototype.constructor);
+    console.log(ss.constructor)
+</script>
+
+</body>
+</html>
