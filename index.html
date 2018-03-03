@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>Document</title>
+</head>
+<body>
+    <div id="target">123</div>
+<script src="index.js"></script>
+<script>
+    new GT('#target').on('tap',function(){
+        console.log('单击操作')
+    }).on('longtap',function(){
+        console.log('长按操作')
+    });
+
+    function multiply(a,b){
+        var aa = a.split('').reverse();
+        var bb = b.split('').reverse();
+
+        var temp = [];
+        for(var i = 0;i < aa.length; i++){
+            for(var j = 0; j < bb.length; j++){
+                var mm = aa[i] * bb[j];
+                temp[i + j] = (temp[i + j]) ? temp[i + j] + mm : mm;
+            }
+        }
+
+        for(var i = 0; i < temp.length; i++){
+            var num = temp[i] % 10;
+            var move = Math.floor(temp[i] / 10);
+            temp[i] = num;
+            if(temp[i + 1]){
+                temp[i + 1] += move;
+            }else{
+                temp[i + 1] = move
+            }
+        }
+        return temp.reverse().join('').replace(/^(0(?!$))+/,'');
+    }
+    function multiply(a, b) {
+        // 通常的算法操作
+        /*
+        例如 123 * 456
+             123
+           * 456
+             ---
+             738
+            615
+           492
+           ----
+           56088
+         */
+        // 为了方便计算，先把数字反转，进位就不朝前了，而是朝后  到最后再反转回来
+        var aa = a.split('').reverse(); //
+        var bb = b.split('').reverse();
+
+        var stack = [];
+
+        for (var i = 0; i < aa.length; i++) {
+            for (var j = 0; j < bb.length; j++) {
+                var m = aa[i] * bb[j];
+                stack[i + j] = (stack[i + j]) ? stack[i + j] + m : m;
+            }
+        }
+        // 组合成一维数组 给下面进位操作
+
+        for (var i = 0; i < stack.length; i++) {
+            var num = stack[i] % 10;
+            var move = Math.floor(stack[i] / 10);
+            stack[i] = num;
+
+            // 大于10 采取进位操作
+            if (stack[i + 1])
+                stack[i + 1] += move;
+            else if (move != 0)
+                stack[i + 1] = move;
+        }
+
+
+        return stack.reverse().join('').replace(/^(0(?!$))+/, ""); // 替换字符串前面的0
+    }
+</script>
+</body>
+</html>
